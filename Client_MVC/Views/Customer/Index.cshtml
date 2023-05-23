@@ -1,0 +1,62 @@
+﻿@model IEnumerable<BusinessObject.Object.Customer>
+
+@{
+    ViewData["Title"] = "List Page";
+}
+
+<a href="/customer/add" class="btn btn-primary">
+    <i class="fa fa-plus"></i> Create
+</a>
+<hr />
+
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Full Name</th>
+            <th>Birthday</th>
+            <th>Gender</th>
+            <th>Phone Number</th>
+            <th>Email</th>
+            <th>Point</th>
+            <th>Type of Customer</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Fullname</td>
+                <td>@item.Birthday</td>
+                @if (@item.Male)
+                {
+                    <td>Male</td>
+                } 
+                else
+                {
+                    <td>Female</td>
+                }
+                <td>@item.PhoneNumber</td>
+                <td>@item.Email</td>
+                <td>@item.Points</td>
+                @foreach (var type in ViewBag.types)
+                {
+                   if (type.Id == item.TypeId)
+                   {
+                      <td>@type.Name</td>
+                   }
+                }
+                <td>
+                    <a href="/customer/edit/@item.Id" class="btn btn-success">
+                        <i class="fa fa-pen"></i>
+                    </a>
+                    <a href="/customer/delete/@item.Id" class="btn btn-danger">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,36 @@
+﻿@model BusinessObject.Object.Customer;
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete Customer</h2>
+
+<form action="delete" method="post">
+    ID: <input asp-for="Id" class="form-control" readonly /> <br />
+    Full Name: <input asp-for="Fullname" class="form-control" readonly /> <br />
+    Birthday: <input asp-for="Birthday" class="form-control" readonly /> <br />
+    Gender: <br />
+    @if (Model.Male)
+    {
+        <input class="form-control" value="Male" readonly /> <br />
+    } else
+    {
+        <input value="Female" class="form-control" readonly /> <br />
+    }
+    Phone Number: <input asp-for="PhoneNumber" class="form-control" readonly /> <br />
+    Email: <input asp-for="Email" class="form-control" readonly /> <br />
+    Point: <input asp-for="Points" class="form-control" readonly /> <br />
+    Type of Customer: 
+    @foreach (var type in ViewBag.typeOfCus)
+    {
+        if (type.Id == Model.TypeId)
+        {
+            <input asp-for="TypeId" value="@type.Name" class="form-control" readonly/>
+        }
+    }
+    <br />
+
+    <input type="submit" value="Delete" class="btn btn-danger" />
+    <a href="/customer" class="btn btn-outline-primary">Back</a>
+</form>
