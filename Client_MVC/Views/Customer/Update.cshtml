@@ -16,18 +16,36 @@
     <span asp-validation-for="Birthday" class="text-danger"></span> <br />
 
     Gender: 
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="gender" id="Male" value=true checked>
-      <label class="form-check-label" for="Male">
-        Male
-      </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="gender" id="Female" value=false>
-      <label class="form-check-label" for="Female">
-        Female
-      </label>
-    </div>
+    @if (Model.Male)
+    {
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="gender" id="Male" value=true checked>
+          <label class="form-check-label" for="Male">
+            Male
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="gender" id="Female" value=false>
+          <label class="form-check-label" for="Female">
+            Female
+          </label>
+        </div>
+    } 
+    else
+    {
+       <div class="form-check">
+          <input class="form-check-input" type="radio" name="gender" id="Male" value=true>
+          <label class="form-check-label" for="Male">
+             Male
+          </label>
+       </div>
+       <div class="form-check">
+          <input class="form-check-input" type="radio" name="gender" id="Female" value=false checked>
+          <label class="form-check-label" for="Female">
+             Female
+          </label>
+       </div>
+    }
     <br />
 
     Phone Number: <input type="text" asp-for="PhoneNumber" class="form-control" />
