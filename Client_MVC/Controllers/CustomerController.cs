@@ -62,14 +62,7 @@ namespace Client_MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (gender)
-                {
-                    obj.Male = true;
-                }
-                else
-                {
-                    obj.Male = false;
-                }
+                obj.Male = gender;
 
                 obj.Birthday = DateTime.Parse(obj.Birthday).ToString("dd/MM/yyyy");
 
@@ -113,14 +106,7 @@ namespace Client_MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (gender)
-                {
-                    obj.Male = true;
-                }
-                else
-                {
-                    obj.Male = false;
-                }
+                obj.Male = gender;
 
                 obj.Birthday = DateTime.Parse(obj.Birthday).ToString("dd/MM/yyyy");
 
