@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -33,9 +34,12 @@ namespace Client_MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var list = await client.GetApi<IEnumerable<Customer>>($"{api}/getAll");
-            ViewData["types"] = await client.GetApi<IEnumerable<TypeCustomer>>($"{api}/getAllOfTypes");
-            return View(list);
+            dynamic model = new ExpandoObject();
+
+            model.customers = await client.GetApi<IEnumerable<Customer>>($"{api}/getAll");
+            model.types = await client.GetApi<IEnumerable<TypeCustomer>>($"{api}/getAllOfTypes");
+
+            return View(model);
         }
         #endregion
 
@@ -63,9 +67,7 @@ namespace Client_MVC.Controllers
             if (ModelState.IsValid)
             {
                 obj.Male = gender;
-
                 obj.Birthday = DateTime.Parse(obj.Birthday).ToString("dd/MM/yyyy");
-
 
                 HttpResponseMessage res = await client.PostApi(obj, $"{api}/add");
                 if (res.StatusCode == HttpStatusCode.Created)
@@ -102,16 +104,23 @@ namespace Client_MVC.Controllers
          * Update View
         */
         [HttpPost("edit/{id}")]
-        public async Task<IActionResult> Update(int id, bool gender, Customer obj)
+        public async Task<IActionResult> Update(string id, bool gender, Customer obj)
         {
             if (ModelState.IsValid)
             {
                 obj.Male = gender;
 
-                obj.Birthday = DateTime.Parse(obj.Birthday).ToString("dd/MM/yyyy");
+                if (obj.Birthday == null)
+                {
+                    var _dob = await client.GetApi<Customer>($"{api}/{id}");
+                    obj.Birthday = _dob.Birthday;
+                }
+                else
+                {
+                    obj.Birthday = DateTime.Parse(obj.Birthday).ToString("dd/MM/yyyy");
+                }
 
                 HttpResponseMessage res = await client.PutApi(obj, $"{api}/edit/{id}");
-
                 if (res.StatusCode == HttpStatusCode.OK)
                 {
                     return Redirect("/customer");
