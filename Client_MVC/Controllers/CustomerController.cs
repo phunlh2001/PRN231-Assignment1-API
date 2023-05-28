@@ -21,8 +21,8 @@ namespace Client_MVC.Controllers
         public CustomerController()
         {
             client = new HttpClient();
-            var contenType = new MediaTypeWithQualityHeaderValue("application/json");
-            client.DefaultRequestHeaders.Accept.Add(contenType);
+            var contentType = new MediaTypeWithQualityHeaderValue("application/json");
+            client.DefaultRequestHeaders.Accept.Add(contentType);
             api = "https://localhost:3001/api/customer";
         }
 
